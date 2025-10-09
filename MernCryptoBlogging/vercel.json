@@ -9,18 +9,20 @@
       }
     }
   ],
-  "routes": [
+  "rewrites": [
     {
-      "src": "/sitemap.xml",
-      "dest": "/sitemap"
+      "source": "/(.*)",
+      "destination": "/index.html"
+    }
+  ],
+  "redirects": [
+    {
+      "source": "/sitemap.xml",
+      "destination": "/sitemap"
     },
     {
-      "src": "/robots.txt",
-      "dest": "/robots"
-    },
-    {
-      "src": "/(.*)",
-      "dest": "/index.html"
+      "source": "/robots.txt",
+      "destination": "/robots"
     }
   ],
   "headers": [
