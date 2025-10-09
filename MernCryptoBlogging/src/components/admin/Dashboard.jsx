@@ -59,66 +59,66 @@ const Dashboard = () => {
   return (
     <div className="space-y-6">
       {/* Welcome Section */}
-      <div className="bg-gradient-to-r from-green-600 to-brown-600 rounded-lg p-6 text-white">
-        <h1 className="text-2xl font-bold mb-2">Welcome to MernCryptoBlog Admin</h1>
-        <p className="text-green-100">
+      <div className="bg-gradient-to-r from-green-600 to-brown-600 rounded-lg p-6 md:p-8 text-white">
+        <h1 className="text-2xl md:text-3xl font-bold mb-2">Welcome to MernCryptoBlog Admin</h1>
+        <p className="text-green-100 text-lg">
           Manage your cryptocurrency blog content, pages, and settings from this dashboard.
         </p>
       </div>
 
       {/* Stats Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        <div className="bg-white rounded-lg shadow p-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
+        <div className="bg-white rounded-lg shadow p-4 md:p-6">
           <div className="flex items-center">
             <div className="p-2 bg-green-100 rounded-lg">
               <FileText className="h-6 w-6 text-green-600" />
             </div>
             <div className="ml-4">
               <p className="text-sm font-medium text-gray-600">Total Posts</p>
-              <p className="text-2xl font-bold text-gray-900">{stats.totalPosts}</p>
+              <p className="text-xl md:text-2xl font-bold text-gray-900">{stats.totalPosts}</p>
             </div>
           </div>
         </div>
 
-        <div className="bg-white rounded-lg shadow p-6">
+        <div className="bg-white rounded-lg shadow p-4 md:p-6">
           <div className="flex items-center">
             <div className="p-2 bg-brown-100 rounded-lg">
               <Globe className="h-6 w-6 text-brown-600" />
             </div>
             <div className="ml-4">
               <p className="text-sm font-medium text-gray-600">Total Pages</p>
-              <p className="text-2xl font-bold text-gray-900">{stats.totalPages}</p>
+              <p className="text-xl md:text-2xl font-bold text-gray-900">{stats.totalPages}</p>
             </div>
           </div>
         </div>
 
-        <div className="bg-white rounded-lg shadow p-6">
+        <div className="bg-white rounded-lg shadow p-4 md:p-6">
           <div className="flex items-center">
             <div className="p-2 bg-blue-100 rounded-lg">
               <Eye className="h-6 w-6 text-blue-600" />
             </div>
             <div className="ml-4">
               <p className="text-sm font-medium text-gray-600">Total Views</p>
-              <p className="text-2xl font-bold text-gray-900">-</p>
+              <p className="text-xl md:text-2xl font-bold text-gray-900">-</p>
             </div>
           </div>
         </div>
 
-        <div className="bg-white rounded-lg shadow p-6">
+        <div className="bg-white rounded-lg shadow p-4 md:p-6">
           <div className="flex items-center">
             <div className="p-2 bg-purple-100 rounded-lg">
               <TrendingUp className="h-6 w-6 text-purple-600" />
             </div>
             <div className="ml-4">
               <p className="text-sm font-medium text-gray-600">Growth</p>
-              <p className="text-2xl font-bold text-gray-900">+12%</p>
+              <p className="text-xl md:text-2xl font-bold text-gray-900">+12%</p>
             </div>
           </div>
         </div>
       </div>
 
       {/* Recent Content */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 xl:grid-cols-2 gap-6">
         {/* Recent Posts */}
         <div className="bg-white rounded-lg shadow">
           <div className="p-6 border-b border-gray-200">
@@ -175,9 +175,9 @@ const Dashboard = () => {
       </div>
 
       {/* Quick Actions */}
-      <div className="bg-white rounded-lg shadow p-6">
+      <div className="bg-white rounded-lg shadow p-4 md:p-6">
         <h3 className="text-lg font-semibold text-gray-900 mb-4">Quick Actions</h3>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
           <button className="flex items-center p-4 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors">
             <FileText className="h-5 w-5 text-green-600 mr-3" />
             <div className="text-left">

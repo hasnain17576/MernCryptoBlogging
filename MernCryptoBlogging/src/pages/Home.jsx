@@ -34,9 +34,20 @@ const Home = () => {
       if (settingsError && settingsError.code !== 'PGRST116') throw settingsError
 
       setFeaturedPosts(posts || [])
-      setSettings(siteSettings)
+      setSettings(siteSettings || {
+        site_name: 'MernCryptoBlog',
+        description: 'Your trusted source for cryptocurrency insights and blockchain technology news',
+        keywords: 'cryptocurrency, blockchain, bitcoin, ethereum, crypto news, digital finance'
+      })
     } catch (error) {
       console.error('Error fetching data:', error)
+      // Fallback to default settings on error
+      setFeaturedPosts([])
+      setSettings({
+        site_name: 'MernCryptoBlog',
+        description: 'Your trusted source for cryptocurrency insights and blockchain technology news',
+        keywords: 'cryptocurrency, blockchain, bitcoin, ethereum, crypto news, digital finance'
+      })
     } finally {
       setLoading(false)
     }

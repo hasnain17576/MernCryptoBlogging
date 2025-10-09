@@ -1,26 +1,16 @@
 import React, { useState } from 'react'
-import { useAuth } from '../../context/AuthContext'
 import { 
   LayoutDashboard, 
   FileText, 
   Globe, 
   Settings, 
-  LogOut, 
   Menu, 
   X,
   User
 } from 'lucide-react'
-import { useNavigate } from 'react-router-dom'
 
 const AdminLayout = ({ children, activeTab, setActiveTab }) => {
-  const { user, signOut } = useAuth()
-  const navigate = useNavigate()
   const [sidebarOpen, setSidebarOpen] = useState(false)
-
-  const handleSignOut = async () => {
-    await signOut()
-    navigate('/')
-  }
 
   const menuItems = [
     { id: 'dashboard', name: 'Dashboard', icon: LayoutDashboard },
@@ -30,7 +20,7 @@ const AdminLayout = ({ children, activeTab, setActiveTab }) => {
   ]
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gray-50 flex">
       {/* Mobile sidebar overlay */}
       {sidebarOpen && (
         <div 
@@ -42,7 +32,7 @@ const AdminLayout = ({ children, activeTab, setActiveTab }) => {
       )}
 
       {/* Sidebar */}
-      <div className={`fixed inset-y-0 left-0 z-50 w-64 bg-brown-800 transform transition-transform duration-300 ease-in-out lg:translate-x-0 lg:static lg:inset-0 ${
+      <div className={`fixed inset-y-0 left-0 z-50 w-64 bg-brown-800 transform transition-transform duration-300 ease-in-out lg:translate-x-0 lg:static lg:inset-0 lg:w-64 xl:w-72 ${
         sidebarOpen ? 'translate-x-0' : '-translate-x-full'
       }`}>
         <div className="flex items-center justify-between h-16 px-6 bg-brown-900">
@@ -79,7 +69,7 @@ const AdminLayout = ({ children, activeTab, setActiveTab }) => {
             })}
           </div>
 
-          {/* User info and logout */}
+          {/* User info section - simplified */}
           <div className="absolute bottom-0 left-0 right-0 p-4 border-t border-brown-700">
             <div className="flex items-center mb-4">
               <div className="flex-shrink-0">
@@ -89,49 +79,44 @@ const AdminLayout = ({ children, activeTab, setActiveTab }) => {
               </div>
               <div className="ml-3">
                 <p className="text-sm font-medium text-white">
-                  {user?.email}
+                  Admin User
                 </p>
                 <p className="text-xs text-brown-300">Administrator</p>
               </div>
             </div>
-            <button
-              onClick={handleSignOut}
-              className="w-full flex items-center px-4 py-2 text-sm font-medium text-brown-200 hover:bg-brown-700 hover:text-white rounded-lg transition-colors"
-            >
-              <LogOut className="h-5 w-5 mr-3" />
-              Sign Out
-            </button>
           </div>
         </nav>
       </div>
 
       {/* Main content */}
-      <div className="lg:pl-64">
+      <div className="flex-1 lg:pl-64 xl:pl-72 min-h-screen">
         {/* Top bar */}
         <div className="sticky top-0 z-10 bg-white shadow-sm border-b border-gray-200">
           <div className="flex items-center justify-between h-16 px-4 sm:px-6 lg:px-8">
-            <button
-              onClick={() => setSidebarOpen(true)}
-              className="lg:hidden text-gray-500 hover:text-gray-700"
-            >
-              <Menu className="h-6 w-6" />
-            </button>
             <div className="flex items-center">
+              <button
+                onClick={() => setSidebarOpen(true)}
+                className="lg:hidden text-gray-500 hover:text-gray-700 mr-4"
+              >
+                <Menu className="h-6 w-6" />
+              </button>
               <h2 className="text-lg font-semibold text-gray-900 capitalize">
                 {activeTab}
               </h2>
             </div>
             <div className="flex items-center space-x-4">
-              <span className="text-sm text-gray-500">
-                Welcome back, {user?.email?.split('@')[0]}
+              <span className="text-sm text-gray-500 hidden sm:block">
+                Welcome, Admin
               </span>
             </div>
           </div>
         </div>
 
         {/* Page content */}
-        <main className="p-6">
-          {children}
+        <main className="p-4 sm:p-6 lg:p-8">
+          <div className="max-w-7xl mx-auto w-full">
+            {children}
+          </div>
         </main>
       </div>
     </div>
