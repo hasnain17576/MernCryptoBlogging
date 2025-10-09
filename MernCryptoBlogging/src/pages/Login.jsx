@@ -12,8 +12,9 @@ const Login = () => {
   const [showPassword, setShowPassword] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState('')
+  const [isSignUp, setIsSignUp] = useState(false)
   
-  const { signIn } = useAuth()
+  const { signIn, signUp } = useAuth()
   const navigate = useNavigate()
 
   const handleChange = (e) => {
@@ -30,12 +31,23 @@ const Login = () => {
     setError('')
 
     try {
-      const { error } = await signIn(formData.email, formData.password)
-      
-      if (error) {
-        setError(error.message)
+      let result
+      if (isSignUp) {
+        result = await signUp(formData.email, formData.password)
       } else {
-        navigate('/admin')
+        result = await signIn(formData.email, formData.password)
+      }
+      
+      if (result.error) {
+        setError(result.error.message)
+      } else {
+        if (isSignUp) {
+          setError('')
+          setIsSignUp(false)
+          // Show success message or handle email confirmation
+        } else {
+          navigate('/admin')
+        }
       }
     } catch (err) {
       setError('An unexpected error occurred')
@@ -47,17 +59,25 @@ const Login = () => {
   return (
     <>
       <SEO 
-        title="Login - MernCryptoBlog Admin"
-        description="Access the admin dashboard for MernCryptoBlog."
-        keywords="admin login, dashboard access"
+        title={`${isSignUp ? 'Create Account' : 'Login'} - MernCryptoBlog Admin`}
+        description={isSignUp 
+          ? 'Create an admin account for MernCryptoBlog dashboard.'
+          : 'Access the admin dashboard for MernCryptoBlog.'
+        }
+        keywords="admin login, dashboard access, create account"
       />
       
       <div className="min-h-screen bg-gray-50 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
         <div className="sm:mx-auto sm:w-full sm:max-w-md">
           <div className="text-center">
-            <h2 className="text-3xl font-bold text-gray-900">Admin Login</h2>
+            <h2 className="text-3xl font-bold text-gray-900">
+              {isSignUp ? 'Create Admin Account' : 'Admin Login'}
+            </h2>
             <p className="mt-2 text-sm text-gray-600">
-              Sign in to access the admin dashboard
+              {isSignUp 
+                ? 'Create an account to access the admin dashboard'
+                : 'Sign in to access the admin dashboard'
+              }
             </p>
           </div>
         </div>
@@ -131,19 +151,38 @@ const Login = () => {
                   disabled={isLoading}
                   className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                  {isLoading ? 'Signing in...' : 'Sign in to Admin'}
+                  {isLoading 
+                    ? (isSignUp ? 'Creating Account...' : 'Signing in...') 
+                    : (isSignUp ? 'Create Admin Account' : 'Sign in to Admin')
+                  }
                 </button>
               </div>
             </form>
 
             <div className="mt-6">
-              <div className="text-center">
-                <Link 
-                  to="/" 
+              <div className="text-center space-y-3">
+                <button
+                  type="button"
+                  onClick={() => {
+                    setIsSignUp(!isSignUp)
+                    setError('')
+                    setFormData({ email: '', password: '' })
+                  }}
                   className="text-sm text-green-600 hover:text-green-500"
                 >
-                  ← Back to Home
-                </Link>
+                  {isSignUp 
+                    ? 'Already have an account? Sign in'
+                    : 'Need an admin account? Create one'
+                  }
+                </button>
+                <div>
+                  <Link 
+                    to="/" 
+                    className="text-sm text-gray-600 hover:text-gray-500"
+                  >
+                    ← Back to Home
+                  </Link>
+                </div>
               </div>
             </div>
           </div>
