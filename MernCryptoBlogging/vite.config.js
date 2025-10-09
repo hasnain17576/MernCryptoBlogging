@@ -25,7 +25,8 @@ export default defineConfig({
     }
   },
   define: {
-    'process.env': process.env
+    // Only define specific environment variables that are needed
+    'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV)
   },
   optimizeDeps: {
     include: ['react', 'react-dom', 'react-router-dom', '@supabase/supabase-js']

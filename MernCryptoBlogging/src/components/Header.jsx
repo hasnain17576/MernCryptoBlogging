@@ -53,42 +53,7 @@ const Header = () => {
               ))}
             </nav>
             
-            {/* Auth Navigation */}
-            <div className="flex items-center space-x-4">
-              {user ? (
-                <>
-                  <Link
-                    to="/admin"
-                    className={`px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200 flex items-center ${
-                      location.pathname === '/admin'
-                        ? 'text-green-600 bg-green-50'
-                        : 'text-gray-700 hover:text-green-600 hover:bg-green-50'
-                    }`}
-                  >
-                    <User className="h-4 w-4 mr-1" />
-                    Admin
-                  </Link>
-                  <button
-                    onClick={handleLogout}
-                    className="px-3 py-2 rounded-md text-sm font-medium text-gray-700 hover:text-red-600 hover:bg-red-50 transition-colors duration-200 flex items-center"
-                  >
-                    <LogOut className="h-4 w-4 mr-1" />
-                    Logout
-                  </button>
-                </>
-              ) : (
-                <Link
-                  to="/login"
-                  className={`px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200 ${
-                    location.pathname === '/login'
-                      ? 'text-green-600 bg-green-50'
-                      : 'text-gray-700 hover:text-green-600 hover:bg-green-50'
-                  }`}
-                >
-                  Login
-                </Link>
-              )}
-            </div>
+            {/* Auth Navigation - Completely removed */}
           </div>
 
           {/* Mobile menu button */}
@@ -120,46 +85,6 @@ const Header = () => {
                   {item.name}
                 </Link>
               ))}
-              
-              {/* Mobile Auth Navigation */}
-              <div className="border-t border-gray-200 pt-3">
-                {user ? (
-                  <>
-                    <Link
-                      to="/admin"
-                      className={`block px-3 py-2 rounded-md text-base font-medium transition-colors duration-200 ${
-                        location.pathname === '/admin'
-                          ? 'text-green-600 bg-green-50'
-                          : 'text-gray-700 hover:text-green-600 hover:bg-green-50'
-                      }`}
-                      onClick={() => setIsMenuOpen(false)}
-                    >
-                      Admin Panel
-                    </Link>
-                    <button
-                      onClick={() => {
-                        handleLogout()
-                        setIsMenuOpen(false)
-                      }}
-                      className="block w-full text-left px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-red-600 hover:bg-red-50 transition-colors duration-200"
-                    >
-                      Logout
-                    </button>
-                  </>
-                ) : (
-                  <Link
-                    to="/login"
-                    className={`block px-3 py-2 rounded-md text-base font-medium transition-colors duration-200 ${
-                      location.pathname === '/login'
-                        ? 'text-green-600 bg-green-50'
-                        : 'text-gray-700 hover:text-green-600 hover:bg-green-50'
-                    }`}
-                    onClick={() => setIsMenuOpen(false)}
-                  >
-                    Login
-                  </Link>
-                )}
-              </div>
             </div>
           </div>
         )}
