@@ -3,22 +3,40 @@
 
 import { createClient } from '@supabase/supabase-js'
 import fs from 'fs'
+import path from 'path'
 
 // Read environment variables
-const envFile = fs.readFileSync('.env.local', 'utf8')
+let envFile;
+try {
+  // Try .env.local first
+  envFile = fs.readFileSync('.env.local', 'utf8');
+} catch (err) {
+  try {
+    // Fall back to .env
+    envFile = fs.readFileSync('.env', 'utf8');
+  } catch (err2) {
+    console.error('❌ No environment file found. Please create .env.local or .env with your Supabase credentials');
+    process.exit(1);
+  }
+}
+
 const envVars = {}
 envFile.split('\n').forEach(line => {
+  // Skip comments and empty lines
+  if (line.trim() === '' || line.trim().startsWith('#')) return;
+  
   const [key, value] = line.split('=')
   if (key && value) {
-    envVars[key.trim()] = value.trim()
+    envVars[key.trim()] = value.trim().replace(/['"]/g, ''); // Remove quotes if present
   }
 })
 
 const supabaseUrl = envVars.VITE_SUPABASE_URL
 const supabaseKey = envVars.VITE_SUPABASE_ANON_KEY
 
-if (!supabaseUrl || !supabaseKey) {
-  console.error('❌ Supabase credentials not found in .env.local')
+if (!supabaseUrl || !supabaseKey || supabaseUrl.includes('your_') || supabaseKey.includes('your_')) {
+  console.error('❌ Supabase credentials not found or still contain placeholder values')
+  console.error('Please update your .env.local file with actual Supabase credentials')
   process.exit(1)
 }
 
@@ -72,7 +90,7 @@ async function createAdminUser() {
     console.log('🔑 Admin Credentials:')
     console.log('   Email:', adminEmail)
     console.log('   Password:', adminPassword)
-    console.log('\n🌐 Login at: http://localhost:3003/login')
+    console.log('\n🌐 Login at: http://localhost:3000/login')
     
   } catch (error) {
     console.error('❌ Error setting up admin user:', error.message)
