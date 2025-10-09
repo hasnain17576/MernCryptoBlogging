@@ -9,46 +9,48 @@
       }
     }
   ],
-  "routes": [
+  "rewrites": [
     {
-      "src": "/sitemap.xml",
-      "dest": "/sitemap"
+      "source": "/(.*)",
+      "destination": "/index.html"
+    }
+  ],
+  "redirects": [
+    {
+      "source": "/sitemap.xml",
+      "destination": "/sitemap"
     },
     {
-      "src": "/robots.txt",
-      "dest": "/robots"
+      "source": "/robots.txt",
+      "destination": "/robots"
     },
     {
-      "src": "/favicon.ico",
-      "dest": "/favicon.ico"
+      "source": "/favicon.ico",
+      "destination": "/favicon.ico"
     },
     {
-      "src": "/apple-touch-icon.png",
-      "dest": "/apple-touch-icon.png"
+      "source": "/apple-touch-icon.png",
+      "destination": "/apple-touch-icon.png"
     },
     {
-      "src": "/favicon-32x32.png",
-      "dest": "/favicon-32x32.png"
+      "source": "/favicon-32x32.png",
+      "destination": "/favicon-32x32.png"
     },
     {
-      "src": "/favicon-16x16.png",
-      "dest": "/favicon-16x16.png"
+      "source": "/favicon-16x16.png",
+      "destination": "/favicon-16x16.png"
     },
     {
-      "src": "/site.webmanifest",
-      "dest": "/site.webmanifest"
+      "source": "/site.webmanifest",
+      "destination": "/site.webmanifest"
     },
     {
-      "src": "/android-chrome-192x192.png",
-      "dest": "/android-chrome-192x192.png"
+      "source": "/android-chrome-192x192.png",
+      "destination": "/android-chrome-192x192.png"
     },
     {
-      "src": "/android-chrome-512x512.png",
-      "dest": "/android-chrome-512x512.png"
-    },
-    {
-      "src": "/(.*)",
-      "dest": "/index.html"
+      "source": "/android-chrome-512x512.png",
+      "destination": "/android-chrome-512x512.png"
     }
   ],
   "headers": [
