@@ -7,7 +7,7 @@ import SEO from '../components/SEO'
 const Login = () => {
   const [formData, setFormData] = useState({
     email: 'admin@merncryptoblog.com',
-    password: ''
+    password: 'Admin123!'
   })
   const [showPassword, setShowPassword] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
@@ -34,9 +34,9 @@ const Login = () => {
       
       if (result.error) {
         if (result.error.message.includes('configured')) {
-          setError('Supabase credentials not configured properly. The development server may need to be restarted.')
+          setError('Supabase credentials not configured properly. Check FIX_AUTHENTICATION.md')
         } else if (result.error.message.includes('Invalid API key')) {
-          setError('Invalid Supabase API key. Please check GET_CORRECT_API_KEY.md for instructions.')
+          setError('Invalid Supabase API key. Check FIX_AUTHENTICATION.md')
         } else {
           setError(result.error.message)
         }
@@ -141,6 +141,12 @@ const Login = () => {
                 >
                   {isLoading ? 'Signing in...' : 'Sign in to Admin'}
                 </button>
+              </div>
+              
+              <div className="text-xs text-gray-500 mt-2">
+                <p>Default credentials:</p>
+                <p>Email: admin@merncryptoblog.com</p>
+                <p>Password: Admin123!</p>
               </div>
             </form>
 
