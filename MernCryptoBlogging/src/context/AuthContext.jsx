@@ -34,6 +34,14 @@ export const AuthProvider = ({ children }) => {
   }, [])
 
   const signUp = async (email, password) => {
+    // Check if we're using the mock client
+    if (typeof supabase.auth.signUp === 'function' && supabase.auth.signUp.length === 0) {
+      return { 
+        data: null, 
+        error: { message: 'Authentication is not configured. Please set up Supabase credentials.' } 
+      }
+    }
+    
     const { data, error } = await supabase.auth.signUp({
       email,
       password,
@@ -42,6 +50,14 @@ export const AuthProvider = ({ children }) => {
   }
 
   const signIn = async (email, password) => {
+    // Check if we're using the mock client
+    if (typeof supabase.auth.signInWithPassword === 'function' && supabase.auth.signInWithPassword.length === 0) {
+      return { 
+        data: null, 
+        error: { message: 'Authentication is not configured. Please set up Supabase credentials.' } 
+      }
+    }
+    
     const { data, error } = await supabase.auth.signInWithPassword({
       email,
       password,
@@ -50,6 +66,13 @@ export const AuthProvider = ({ children }) => {
   }
 
   const signOut = async () => {
+    // Check if we're using the mock client
+    if (typeof supabase.auth.signOut === 'function' && supabase.auth.signOut.length === 0) {
+      return { 
+        error: { message: 'Authentication is not configured. Please set up Supabase credentials.' } 
+      }
+    }
+    
     const { error } = await supabase.auth.signOut()
     return { error }
   }

@@ -6,15 +6,14 @@ import SEO from '../components/SEO'
 
 const Login = () => {
   const [formData, setFormData] = useState({
-    email: '',
+    email: 'admin@merncryptoblog.com',
     password: ''
   })
   const [showPassword, setShowPassword] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState('')
-  const [isSignUp, setIsSignUp] = useState(false)
   
-  const { signIn, signUp } = useAuth()
+  const { signIn } = useAuth()
   const navigate = useNavigate()
 
   const handleChange = (e) => {
@@ -31,26 +30,21 @@ const Login = () => {
     setError('')
 
     try {
-      let result
-      if (isSignUp) {
-        result = await signUp(formData.email, formData.password)
-      } else {
-        result = await signIn(formData.email, formData.password)
-      }
+      const result = await signIn(formData.email, formData.password)
       
       if (result.error) {
-        setError(result.error.message)
-      } else {
-        if (isSignUp) {
-          setError('')
-          setIsSignUp(false)
-          // Show success message or handle email confirmation
+        if (result.error.message.includes('configured')) {
+          setError('Supabase credentials not configured properly. The development server may need to be restarted.')
+        } else if (result.error.message.includes('Invalid API key')) {
+          setError('Invalid Supabase API key. Please check GET_CORRECT_API_KEY.md for instructions.')
         } else {
-          navigate('/admin')
+          setError(result.error.message)
         }
+      } else {
+        navigate('/admin')
       }
     } catch (err) {
-      setError('An unexpected error occurred')
+      setError('An unexpected error occurred. Please check your Supabase configuration.')
     } finally {
       setIsLoading(false)
     }
@@ -59,25 +53,19 @@ const Login = () => {
   return (
     <>
       <SEO 
-        title={`${isSignUp ? 'Create Account' : 'Login'} - MernCryptoBlog Admin`}
-        description={isSignUp 
-          ? 'Create an admin account for MernCryptoBlog dashboard.'
-          : 'Access the admin dashboard for MernCryptoBlog.'
-        }
-        keywords="admin login, dashboard access, create account"
+        title="Login - MernCryptoBlog Admin"
+        description="Access the admin dashboard for MernCryptoBlog."
+        keywords="admin login, dashboard access"
       />
       
       <div className="min-h-screen bg-gray-50 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
         <div className="sm:mx-auto sm:w-full sm:max-w-md">
           <div className="text-center">
             <h2 className="text-3xl font-bold text-gray-900">
-              {isSignUp ? 'Create Admin Account' : 'Admin Login'}
+              Admin Login
             </h2>
             <p className="mt-2 text-sm text-gray-600">
-              {isSignUp 
-                ? 'Create an account to access the admin dashboard'
-                : 'Sign in to access the admin dashboard'
-              }
+              Sign in to access the admin dashboard
             </p>
           </div>
         </div>
@@ -151,30 +139,13 @@ const Login = () => {
                   disabled={isLoading}
                   className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                  {isLoading 
-                    ? (isSignUp ? 'Creating Account...' : 'Signing in...') 
-                    : (isSignUp ? 'Create Admin Account' : 'Sign in to Admin')
-                  }
+                  {isLoading ? 'Signing in...' : 'Sign in to Admin'}
                 </button>
               </div>
             </form>
 
             <div className="mt-6">
-              <div className="text-center space-y-3">
-                <button
-                  type="button"
-                  onClick={() => {
-                    setIsSignUp(!isSignUp)
-                    setError('')
-                    setFormData({ email: '', password: '' })
-                  }}
-                  className="text-sm text-green-600 hover:text-green-500"
-                >
-                  {isSignUp 
-                    ? 'Already have an account? Sign in'
-                    : 'Need an admin account? Create one'
-                  }
-                </button>
+              <div className="text-center">
                 <div>
                   <Link 
                     to="/" 
